@@ -298,71 +298,6 @@ fn apaxiaaans() {
     println!("{}", input);
 }
 
-fn addingwords() {
-    let mut hashmap: HashMap<String, i16> = HashMap::with_capacity(10);
-    let stdin = io::stdin();
-
-    for line in stdin.lock().lines().map(|l| l.unwrap()) {
-        let hashmap_temp = hashmap.clone();
-        let mut words: Vec<&str> = line.split_whitespace().collect();
-
-        match words[0] {
-            "def" => {
-                let value: i16 = words[2].parse().unwrap();
-
-                if hashmap_temp.get(words[1]).is_some() {
-                    hashmap = hashmap_temp.into_iter().filter(|&(_, v)| v != value)
-                        .collect();
-                }
-                hashmap.insert(words[1].to_string(), value);
-            }
-            "calc" => {
-                let mut has_unknown: bool = false;
-                let mut value_total: i16 = 0;
-
-                words.remove(0);
-                for i in 1..words.len() {
-                    let mut value: i16 = 0;
-
-                    if i % 2 == 0 {
-                        value = match hashmap_temp.get(words[i]) {
-                            Some(v) => v.clone(),
-                            None => {
-                                has_unknown = true;
-                                break;
-                            }
-                        };
-                    } else {
-                        match words[i] {
-                            "+" => value_total += value,
-                            "-" => value_total -= value,
-                            "=" => break,
-                            _ => println!("Incorrect operator"),
-                        }
-                    }
-                }
-
-                let mut result: String = words.join(" ");
-                let mut a: String = String::new();
-                let mut b: i16 = -1;
-
-                if !has_unknown {
-                    let key_value = match hashmap_temp.iter()
-                        .find(|&(k, v)| v == &value_total) {
-                            Some(key_value) => key_value,
-                            None => (&a, &b),
-                    };
-                    println!("{} {}", result, key_value.0);
-                } else {
-                    println!("{} unknown", result);
-                }
-            }
-            "clear" => hashmap.clear(),
-            _ => println!("Incorrect instruction"),
-        }
-    }
-}
-
 struct Quest {
     energy: u32,
     gold: u32,
@@ -448,6 +383,71 @@ fn kattissquest() {
             }
         }
         completed_queries += 1;
+    }
+}
+
+fn addingwords() {
+    let mut hashmap: HashMap<String, i16> = HashMap::with_capacity(10);
+    let stdin = io::stdin();
+
+    for line in stdin.lock().lines().map(|l| l.unwrap()) {
+        let hashmap_temp = hashmap.clone();
+        let mut words: Vec<&str> = line.split_whitespace().collect();
+
+        match words[0] {
+            "def" => {
+                let value: i16 = words[2].parse().unwrap();
+
+                if hashmap_temp.get(words[1]).is_some() {
+                    hashmap = hashmap_temp.into_iter().filter(|&(_, v)| v != value)
+                        .collect();
+                }
+                hashmap.insert(words[1].to_string(), value);
+            }
+            "calc" => {
+                let mut has_unknown: bool = false;
+                let mut value_total: i16 = 0;
+
+                words.remove(0);
+                for i in 1..words.len() {
+                    let mut value: i16 = 0;
+
+                    if i % 2 == 0 {
+                        value = match hashmap_temp.get(words[i]) {
+                            Some(v) => v.clone(),
+                            None => {
+                                has_unknown = true;
+                                break;
+                            }
+                        };
+                    } else {
+                        match words[i] {
+                            "+" => value_total += value,
+                            "-" => value_total -= value,
+                            "=" => break,
+                            _ => println!("Incorrect operator"),
+                        }
+                    }
+                }
+
+                let mut result: String = words.join(" ");
+                let mut a: String = String::new();
+                let mut b: i16 = -1;
+
+                if !has_unknown {
+                    let key_value = match hashmap_temp.iter()
+                        .find(|&(k, v)| v == &value_total) {
+                        Some(key_value) => key_value,
+                        None => (&a, &b),
+                    };
+                    println!("{} {}", result, key_value.0);
+                } else {
+                    println!("{} unknown", result);
+                }
+            }
+            "clear" => hashmap.clear(),
+            _ => println!("Incorrect instruction"),
+        }
     }
 }
 
