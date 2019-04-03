@@ -1,0 +1,11 @@
+[package]
+name = "kattis"
+version = "0.1.0"
+authors = ["Haratyk Florent <haratykflorent@gmail.com>"]
+
+[dev-dependencies]
+criterion = "0.2"
+
+[[bench]]
+name = "my_benchmark"
+harness = false
