@@ -407,11 +407,10 @@ fn addingwords() {
             "calc" => {
                 let mut has_unknown: bool = false;
                 let mut value_total: i16 = 0;
+                let mut value: i16 = 0;
 
                 words.remove(0);
                 for i in 1..words.len() {
-                    let mut value: i16 = 0;
-
                     if i % 2 == 0 {
                         value = match hashmap_temp.get(words[i]) {
                             Some(v) => v.clone(),
@@ -429,18 +428,19 @@ fn addingwords() {
                         }
                     }
                 }
-
                 let mut result: String = words.join(" ");
-                let mut a: String = String::new();
-                let mut b: i16 = -1;
 
                 if !has_unknown {
-                    let key_value = match hashmap_temp.iter()
-                        .find(|&(k, v)| v == &value_total) {
-                        Some(key_value) => key_value,
-                        None => (&a, &b),
+                    println!();
+                    println!("{:?}", value_total);
+                    println!("{:?}", hashmap_temp);
+
+                    let key: String = match hashmap_temp.iter()
+                        .find(|&(_k, v)| v == &value_total) {
+                        Some((k, &_v)) => k.clone(),
+                        None => "err".to_string()
                     };
-                    println!("{} {}", result, key_value.0);
+                    println!("{} {}", result, key);
                 } else {
                     println!("{} unknown", result);
                 }
