@@ -410,7 +410,7 @@ fn addingwords() {
                 let mut value: i16 = 0;
 
                 words.remove(0);
-                for i in 1..words.len() {
+                for i in 0..words.len() {
                     if i % 2 == 0 {
                         value = match hashmap_temp.get(words[i]) {
                             Some(v) => v.clone(),
@@ -426,6 +426,8 @@ fn addingwords() {
                             "=" => break,
                             _ => println!("Incorrect operator"),
                         }
+                        println!("{}", value);
+                        println!("{}", value_total);
                     }
                 }
                 let mut result: String = words.join(" ");
@@ -438,7 +440,7 @@ fn addingwords() {
                     let key: String = match hashmap_temp.iter()
                         .find(|&(_k, v)| v == &value_total) {
                         Some((k, &_v)) => k.clone(),
-                        None => "err".to_string()
+                        None => "err".to_string(),
                     };
                     println!("{} {}", result, key);
                 } else {
