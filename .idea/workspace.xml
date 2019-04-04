@@ -10,7 +10,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8b193357-95a9-4b8e-bfb1-b47944e3ae77" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
@@ -29,8 +28,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main.rs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="722">
-              <caret line="451" lean-forward="true" selection-start-line="451" selection-end-line="451" />
+            <state relative-caret-position="731">
+              <caret line="365" column="18" selection-start-line="365" selection-start-column="18" selection-end-line="365" selection-end-column="18" />
               <folding>
                 <element signature="n#!!block;n#oddities#0" />
                 <element signature="n#!!block;n#faktor#0" />
@@ -46,11 +45,12 @@
                 <element signature="n#!!block;n#aaah#0" />
                 <element signature="n#!!block;n#deathknight#0" />
                 <element signature="n#!!block;n#apaxiaaans#0" />
+                <element signature="n#!!block;n#addingwords#0" />
                 <element signature="n#!!block;n#Quest#0" />
                 <element signature="n#!!block;n#Query#0" />
                 <element signature="n#!!block;n#kattissquest#0" />
-                <element signature="e#13334#13335#0" expanded="true" />
-                <element signature="e#13355#13356#0" expanded="true" />
+                <element signature="e#13348#13349#0" expanded="true" />
+                <element signature="e#13370#13371#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -95,6 +95,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -117,7 +118,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -194,8 +194,8 @@
     <list>
       <item itemvalue="Cargo Command.Benchmark" />
       <item itemvalue="Cargo Command.Build kattis" />
-      <item itemvalue="Cargo Command.Run kattis" />
       <item itemvalue="Cargo Command.Run kattis release" />
+      <item itemvalue="Cargo Command.Run kattis" />
     </list>
     <recent_temporary>
       <list>
@@ -236,7 +236,7 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24360341" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24626866" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -304,13 +304,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/addingwords/test.in">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" column="5" lean-forward="true" selection-start-line="3" selection-start-column="5" selection-end-line="3" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/test/addingwords/test.in" />
     <entry file="file://$PROJECT_DIR$/test/addingwords/1.in">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
@@ -320,8 +314,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main.rs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="722">
-          <caret line="451" lean-forward="true" selection-start-line="451" selection-end-line="451" />
+        <state relative-caret-position="731">
+          <caret line="365" column="18" selection-start-line="365" selection-start-column="18" selection-end-line="365" selection-end-column="18" />
           <folding>
             <element signature="n#!!block;n#oddities#0" />
             <element signature="n#!!block;n#faktor#0" />
@@ -337,11 +331,12 @@
             <element signature="n#!!block;n#aaah#0" />
             <element signature="n#!!block;n#deathknight#0" />
             <element signature="n#!!block;n#apaxiaaans#0" />
+            <element signature="n#!!block;n#addingwords#0" />
             <element signature="n#!!block;n#Quest#0" />
             <element signature="n#!!block;n#Query#0" />
             <element signature="n#!!block;n#kattissquest#0" />
-            <element signature="e#13334#13335#0" expanded="true" />
-            <element signature="e#13355#13356#0" expanded="true" />
+            <element signature="e#13348#13349#0" expanded="true" />
+            <element signature="e#13370#13371#0" expanded="true" />
           </folding>
         </state>
       </provider>

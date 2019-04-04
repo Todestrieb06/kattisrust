@@ -297,103 +297,6 @@ fn apaxiaaans() {
     println!("{}", input);
 }
 
-struct Quest {
-    energy: u32,
-    gold: u32,
-}
-
-struct Query {
-    energy: u32,
-    line: usize,
-}
-
-fn kattissquest() {
-    //Input and affectation
-    let mut quests: Vec<Quest> = Vec::new();
-    let mut queries: Vec<Query> = Vec::new();
-    {
-        let stdin = io::stdin();
-        let mut i = 0;
-        for line in stdin.lock().lines().map(|l| l.unwrap()) {
-            let input: Vec<&str> = line.split_whitespace().collect();
-            if input[0] == "add" {
-                quests.push(Quest {
-                    energy: input[1].parse().unwrap(),
-                    gold: input[2].parse().unwrap(),
-                });
-            } else {
-                queries.push(Query {
-                    energy: input[1].parse().unwrap(),
-                    line: i,
-                });
-            }
-            i += 1;
-        }
-    }
-
-    let mut completed_quests: usize = 0;
-    let mut completed_queries: usize = 0;
-    for query in queries.iter() {
-        let range: usize = query.line - completed_quests - completed_queries;
-        let mut achievable_quests: Vec<usize> = Vec::new();
-        for i in 0..range {
-            if quests[i].energy <= query.energy {
-                achievable_quests.push(i);
-            }
-        }
-        match achievable_quests.len() {
-            0 => println!("{}", "0"),
-            1 => {
-                println!("{}", quests[achievable_quests[0]].gold);
-                quests.remove(achievable_quests[0]);
-                completed_quests += 1;
-            }
-            _ => {
-                let mut total_gold: u32 = 0;
-                let mut total_energy: u32 = 0;
-                let mut accepted_quests: Vec<usize> = Vec::new();
-                for _i1 in 0..achievable_quests.len() {
-                    let mut largest_gold: usize = 0;
-                    for i2 in 0..achievable_quests.len() {
-                        if quests[achievable_quests[i2]].gold >= quests[largest_gold].gold {
-                            largest_gold = achievable_quests[i2];
-                        }
-                    }
-                    total_gold += quests[largest_gold].gold;
-                    accepted_quests.push(largest_gold);
-                    largest_gold = 0;
-                }
-                /*Refactoring possible for copy-less order
-                let mut ordered_quests: Vec<usize> = Vec::with_capacity(achievable_quests.len());
-                {
-                    let mut largest_gold: usize = 0;
-                    for _i1 in 0..achievable_quests.len() {
-                        for i2 in 0..achievable_quests.len() {
-                            if quests[achievable_quests[i2]].gold >= quests[achievable_quests[largest_gold]].gold {
-                                largest_gold = i2;
-                            }
-                        }
-                        ordered_quests.push(achievable_quests[largest_gold]);
-                        achievable_quests.remove(largest_gold);
-                        largest_gold = 0;
-                    }
-                }
-                */
-            }
-        }
-        completed_queries += 1;
-    }
-}
-
-fn hash(value: &[u8]) -> u32 {
-    let mut hash: u32 = 0x811c9dc5;
-    for byte in value {
-        hash ^= *byte as u32;
-        hash = hash.wrapping_mul(0x1000193);
-    }
-    hash
-}
-
 fn addingwords() {
     let mut hashmap: HashMap<String, i16> = HashMap::with_capacity(32);
     let stdin = io::stdin();
@@ -426,7 +329,7 @@ fn addingwords() {
                                 } else {
                                     value_total -= v;
                                 }
-                            },
+                            }
                             None => {
                                 has_unknown = true;
                             }
@@ -450,6 +353,95 @@ fn addingwords() {
     }
 }
 
+struct Quest {
+    energy: u32,
+    gold: u32,
+}
+
+struct Query {
+    energy: u32,
+    line: usize,
+}
+
+fn kattissquest() {
+    let mut quests: Vec<Quest> = Vec::new();
+    let mut queries: Vec<Query> = Vec::new();
+    {
+        let stdin = io::stdin();
+        let mut i = 0;
+
+        for line in stdin.lock().lines().map(|l| l.unwrap()) {
+            let input: Vec<&str> = line.split_whitespace().collect();
+
+            if input[0] == "add" {
+                quests.push(Quest {
+                    energy: input[1].parse().unwrap(),
+                    gold: input[2].parse().unwrap(),
+                });
+            } else {
+                queries.push(Query {
+                    energy: input[1].parse().unwrap(),
+                    line: i,
+                });
+            }
+            i += 1;
+        }
+    }
+    let mut completed_quests: usize = 0;
+    let mut completed_queries: usize = 0;
+
+    for query in queries.iter() {
+        let range: usize = query.line - completed_quests - completed_queries;
+        let mut achievable_quests: Vec<usize> = Vec::new();
+
+        for i in 0..range {
+            if quests[i].energy <= query.energy {
+                achievable_quests.push(i);
+            }
+        }
+        match achievable_quests.len() {
+            0 => println!("{}", "0"),
+            1 => {
+                println!("{}", quests[achievable_quests[0]].gold);
+                quests.remove(achievable_quests[0]);
+                completed_quests += 1;
+            }
+            _ => {
+                let mut total_gold: u32 = 0;
+                let mut total_energy: u32 = 0;
+                let mut accepted_quests: Vec<usize> = Vec::new();
+                for _i in 0..achievable_quests.len() {
+                    let mut largest_gold: usize = 0;
+                    for i in 0..achievable_quests.len() {
+                        if quests[achievable_quests[i]].gold >= quests[largest_gold].gold {
+                            largest_gold = achievable_quests[i];
+                        }
+                    }
+                    total_gold += quests[largest_gold].gold;
+                    accepted_quests.push(largest_gold);
+                    largest_gold = 0;
+                }
+                //Refactoring possible for copy-less order
+                /*let mut ordered_quests: Vec<usize> = Vec::with_capacity(achievable_quests.len());
+                {
+                    let mut largest_gold: usize = 0;
+                    for _i1 in 0..achievable_quests.len() {
+                        for i2 in 0..achievable_quests.len() {
+                            if quests[achievable_quests[i2]].gold >= quests[achievable_quests[largest_gold]].gold {
+                                largest_gold = i2;
+                            }
+                        }
+                        ordered_quests.push(achievable_quests[largest_gold]);
+                        achievable_quests.remove(largest_gold);
+                        largest_gold = 0;
+                    }
+                }*/
+            }
+        }
+        completed_queries += 1;
+    }
+}
+
 fn main() {
-    addingwords();
+    kattissquest();
 }
