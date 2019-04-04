@@ -6,7 +6,6 @@ use std::str::SplitWhitespace;
 use std::collections::HashMap;
 use std::collections::HashSet;
 use std::hash::Hash;
-use std::ptr::null;
 
 fn oddities() {
     let mut n: String = String::new();
@@ -386,69 +385,67 @@ fn kattissquest() {
     }
 }
 
+fn hash(value: &[u8]) -> u32 {
+    let mut hash: u32 = 0x811c9dc5;
+    for byte in value {
+        hash ^= *byte as u32;
+        hash = hash.wrapping_mul(0x1000193);
+    }
+    hash
+}
+
 fn addingwords() {
-    let mut hashmap: HashMap<String, i16> = HashMap::with_capacity(10);
+    let mut hashmap: HashMap<String, i16> = HashMap::with_capacity(32);
     let stdin = io::stdin();
 
     for line in stdin.lock().lines().map(|l| l.unwrap()) {
-        let hashmap_temp = hashmap.clone();
-        let mut words: Vec<&str> = line.split_whitespace().collect();
+        let words: Vec<&str> = line.split_whitespace().collect();
 
         match words[0] {
             "def" => {
-                let value: i16 = words[2].parse().unwrap();
-
-                if hashmap_temp.get(words[1]).is_some() {
-                    hashmap = hashmap_temp.into_iter().filter(|&(_, v)| v != value)
-                        .collect();
-                }
-                hashmap.insert(words[1].to_string(), value);
+                hashmap.remove(words[1]);
+                hashmap.insert(words[1].to_string(), words[2].parse().unwrap());
             }
             "calc" => {
                 let mut has_unknown: bool = false;
-                let mut value_total: i16 = 0;
-                let mut value: i16 = 0;
-
-                words.remove(0);
-                for i in 0..words.len() {
-                    if i % 2 == 0 {
-                        value = match hashmap_temp.get(words[i]) {
-                            Some(v) => v.clone(),
-                            None => {
-                                has_unknown = true;
-                                break;
-                            }
-                        };
-                    } else {
-                        match words[i] {
-                            "+" => value_total += value,
-                            "-" => value_total -= value,
-                            "=" => break,
-                            _ => println!("Incorrect operator"),
-                        }
-                        println!("{}", value);
-                        println!("{}", value_total);
+                let mut value_total: i16 = match hashmap.get(words[1]) {
+                    Some(v) => v.clone(),
+                    None => {
+                        has_unknown = true;
+                        println!("{} unknown", &line[5..line.len()]);
+                        0
                     }
-                }
-                let mut result: String = words.join(" ");
+                };
 
                 if !has_unknown {
-                    println!();
-                    println!("{:?}", value_total);
-                    println!("{:?}", hashmap_temp);
-
-                    let key: String = match hashmap_temp.iter()
-                        .find(|&(_k, v)| v == &value_total) {
-                        Some((k, &_v)) => k.clone(),
-                        None => "err".to_string(),
-                    };
-                    println!("{} {}", result, key);
-                } else {
-                    println!("{} unknown", result);
+                    for i in (2..words.len() - 1).step_by(2) {
+                        match hashmap.get(words[i + 1]) {
+                            Some(v) => {
+                                if words[i] == "+" {
+                                    value_total += v;
+                                } else {
+                                    value_total -= v;
+                                }
+                            },
+                            None => {
+                                has_unknown = true;
+                            }
+                        };
+                    }
+                    if !has_unknown {
+                        let key: String = match hashmap.iter()
+                            .find(|&(_k, v)| v == &value_total) {
+                            Some((k, &_v)) => k.clone(),
+                            None => String::from("unknown")
+                        };
+                        println!("{} {}", &line[5..line.len()], key);
+                    } else {
+                        println!("{} unknown", &line[5..line.len()]);
+                    }
                 }
             }
             "clear" => hashmap.clear(),
-            _ => println!("Incorrect instruction"),
+            _ => return,
         }
     }
 }
