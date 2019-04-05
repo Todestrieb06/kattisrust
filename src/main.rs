@@ -2,10 +2,10 @@
 
 use std::io::{self, BufRead, Read};
 use std::str::SplitWhitespace;
-
 use std::collections::HashMap;
 use std::collections::HashSet;
 use std::hash::Hash;
+use std::f32::consts::PI;
 
 fn oddities() {
     let mut n: String = String::new();
@@ -298,6 +298,7 @@ fn apaxiaaans() {
 }
 
 fn addingwords() {
+    let unknown: String = String::from("unknown");
     let mut hashmap: HashMap<String, i16> = HashMap::with_capacity(32);
     let stdin = io::stdin();
 
@@ -315,7 +316,7 @@ fn addingwords() {
                     Some(v) => v.clone(),
                     None => {
                         has_unknown = true;
-                        println!("{} unknown", &line[5..line.len()]);
+                        println!("{} {}", &line[5..line.len()], unknown);
                         0
                     }
                 };
@@ -343,7 +344,7 @@ fn addingwords() {
                         };
                         println!("{} {}", &line[5..line.len()], key);
                     } else {
-                        println!("{} unknown", &line[5..line.len()]);
+                        println!("{} {}", &line[5..line.len()], unknown);
                     }
                 }
             }
@@ -442,6 +443,52 @@ fn kattissquest() {
     }
 }
 
+fn anthonyanddiablo() {
+    let mut input = String::new();
+    io::stdin().read_line(&mut input).unwrap();
+    let input: Vec<f32> = input.split_whitespace().map(|word| word.parse().unwrap())
+        .collect();
+    let available = input[1] / (PI * 2.0);
+    let size = PI * (available.powf(2.0));
+
+    if size >= input[0] {
+        println!("Diablo is happy!");
+    } else {
+        println!("Need more materials!");
+    }
+}
+
+fn abc() {
+    let mut numbers = String::with_capacity(6);
+    io::stdin().read_line(&mut numbers).unwrap();
+    let mut numbers: Vec<u8> = numbers.split_whitespace().map(|word| word.parse().unwrap())
+        .collect();
+    numbers.sort_unstable();
+
+    let mut order = String::with_capacity(4);
+    io::stdin().read_line(&mut order).unwrap();
+    let order: Vec<char> = order.chars().collect();
+
+    match order[0] {
+        'A' => print!("{} ", numbers[0]),
+        'B' => print!("{} ", numbers[1]),
+        'C' => print!("{} ", numbers[2]),
+        _ => return,
+    }
+    match order[1] {
+        'A' => print!("{} ", numbers[0]),
+        'B' => print!("{} ", numbers[1]),
+        'C' => print!("{} ", numbers[2]),
+        _ => return,
+    }
+    match order[2] {
+        'A' => print!("{}", numbers[0]),
+        'B' => print!("{}", numbers[1]),
+        'C' => print!("{}", numbers[2]),
+        _ => return,
+    }
+}
+
 fn main() {
-    kattissquest();
+    abc();
 }
