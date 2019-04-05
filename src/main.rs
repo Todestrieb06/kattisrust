@@ -253,13 +253,38 @@ fn datum() {
     println!("{}", day_to_output[(month_to_day[month - 1] + day) % 7]);
 }
 
+fn zamka_sum(mut number: u16) -> u16 {
+    let mut sum = 0;
+
+    while number > 0 {
+        sum += number % 10;
+        number /= 10;
+    }
+    sum
+}
+
 fn zamka() {
     let stdin = io::stdin();
-    let lines: Vec<String> = stdin.lock().lines().map(|line| line.unwrap())
+    let input: Vec<u16> = stdin.lock().lines().map(|line| line.unwrap())
         .map(|line| line.parse().unwrap()).collect();
-    let l: usize = lines[0].parse().unwrap();
-    let d: usize = lines[1].parse().unwrap();
-    let x: usize = lines[2].parse().unwrap();
+
+    let mut i = input[0];
+    while i <= input[1] {
+        if zamka_sum(i) == input[2] {
+            println!("{}", i);
+            break;
+        }
+        i += 1;
+    }
+
+    let mut i = input[1];
+    while i >= input[0] {
+        if zamka_sum(i) == input[2] {
+            println!("{}", i);
+            break;
+        }
+        i -= 1;
+    }
 }
 
 fn aaah() {
@@ -490,5 +515,5 @@ fn abc() {
 }
 
 fn main() {
-    abc();
+    zamka();
 }

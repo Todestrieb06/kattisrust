@@ -10,7 +10,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8b193357-95a9-4b8e-bfb1-b47944e3ae77" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
@@ -30,7 +29,7 @@
         <entry file="file://$PROJECT_DIR$/src/main.rs">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="630">
-              <caret line="493" column="1" lean-forward="true" selection-start-line="493" selection-start-column="1" selection-end-line="493" selection-end-column="1" />
+              <caret line="518" column="1" lean-forward="true" selection-start-line="518" selection-start-column="1" selection-end-line="518" selection-end-column="1" />
               <folding>
                 <element signature="n#!!block;n#oddities#0" />
                 <element signature="n#!!block;n#faktor#0" />
@@ -42,6 +41,7 @@
                 <element signature="n#!!block;n#isithalloween#0" />
                 <element signature="n#!!block;n#oddmanout#0" />
                 <element signature="n#!!block;n#datum#0" />
+                <element signature="n#!!block;n#zamka_sum#0" />
                 <element signature="n#!!block;n#zamka#0" />
                 <element signature="n#!!block;n#aaah#0" />
                 <element signature="n#!!block;n#deathknight#0" />
@@ -52,8 +52,8 @@
                 <element signature="n#!!block;n#kattissquest#0" />
                 <element signature="n#!!block;n#anthonyanddiablo#0" />
                 <element signature="n#!!block;n#abc#0" />
-                <element signature="e#14358#14359#0" expanded="true" />
-                <element signature="e#14371#14372#0" expanded="true" />
+                <element signature="e#15559#15560#0" expanded="true" />
+                <element signature="e#15587#15588#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -83,6 +83,8 @@
         <option value="$PROJECT_DIR$/test/addingwords/1.in" />
         <option value="$PROJECT_DIR$/test/addingwords/test" />
         <option value="$PROJECT_DIR$/test/addingwords/test.in" />
+        <option value="$PROJECT_DIR$/test/lastfactorialdigit/1.in" />
+        <option value="$PROJECT_DIR$/test/zamka/1.in" />
         <option value="$PROJECT_DIR$/src/main.rs" />
       </list>
     </option>
@@ -114,7 +116,7 @@
               <item name="kattis" type="b2602c69:ProjectViewProjectNode" />
               <item name="kattis" type="462c0819:PsiDirectoryNode" />
               <item name="test" type="462c0819:PsiDirectoryNode" />
-              <item name="addingwords" type="462c0819:PsiDirectoryNode" />
+              <item name="zamka" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -153,7 +155,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Cargo Command.Run kattis">
+  <component name="RunManager" selected="Cargo Command.Build kattis">
     <configuration name="Benchmark" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="channel" value="NIGHTLY" />
       <option name="command" value="bench" />
@@ -315,10 +317,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/test/lastfactorialdigit/1.in">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="1" selection-start-line="3" selection-start-column="1" selection-end-line="3" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/zamka/1.in">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="1" selection-start-line="2" selection-start-column="1" selection-end-line="2" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main.rs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="630">
-          <caret line="493" column="1" lean-forward="true" selection-start-line="493" selection-start-column="1" selection-end-line="493" selection-end-column="1" />
+          <caret line="518" column="1" lean-forward="true" selection-start-line="518" selection-start-column="1" selection-end-line="518" selection-end-column="1" />
           <folding>
             <element signature="n#!!block;n#oddities#0" />
             <element signature="n#!!block;n#faktor#0" />
@@ -330,6 +346,7 @@
             <element signature="n#!!block;n#isithalloween#0" />
             <element signature="n#!!block;n#oddmanout#0" />
             <element signature="n#!!block;n#datum#0" />
+            <element signature="n#!!block;n#zamka_sum#0" />
             <element signature="n#!!block;n#zamka#0" />
             <element signature="n#!!block;n#aaah#0" />
             <element signature="n#!!block;n#deathknight#0" />
@@ -340,8 +357,8 @@
             <element signature="n#!!block;n#kattissquest#0" />
             <element signature="n#!!block;n#anthonyanddiablo#0" />
             <element signature="n#!!block;n#abc#0" />
-            <element signature="e#14358#14359#0" expanded="true" />
-            <element signature="e#14371#14372#0" expanded="true" />
+            <element signature="e#15559#15560#0" expanded="true" />
+            <element signature="e#15587#15588#0" expanded="true" />
           </folding>
         </state>
       </provider>
