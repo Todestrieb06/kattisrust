@@ -1,4 +1,5 @@
 #![allow(dead_code)]
+#![feature(core_intrinsics)]
 
 use std::io::{self, BufRead, Read};
 use std::str::SplitWhitespace;
@@ -322,63 +323,6 @@ fn apaxiaaans() {
     println!("{}", input);
 }
 
-fn addingwords() {
-    let unknown: String = String::from("unknown");
-    let mut hashmap: HashMap<String, i16> = HashMap::with_capacity(32);
-    let stdin = io::stdin();
-
-    for line in stdin.lock().lines().map(|l| l.unwrap()) {
-        let words: Vec<&str> = line.split_whitespace().collect();
-
-        match words[0] {
-            "def" => {
-                hashmap.remove(words[1]);
-                hashmap.insert(words[1].to_string(), words[2].parse().unwrap());
-            }
-            "calc" => {
-                let mut has_unknown: bool = false;
-                let mut value_total: i16 = match hashmap.get(words[1]) {
-                    Some(v) => v.clone(),
-                    None => {
-                        has_unknown = true;
-                        println!("{} {}", &line[5..line.len()], unknown);
-                        0
-                    }
-                };
-
-                if !has_unknown {
-                    for i in (2..words.len() - 1).step_by(2) {
-                        match hashmap.get(words[i + 1]) {
-                            Some(v) => {
-                                if words[i] == "+" {
-                                    value_total += v;
-                                } else {
-                                    value_total -= v;
-                                }
-                            }
-                            None => {
-                                has_unknown = true;
-                            }
-                        };
-                    }
-                    if !has_unknown {
-                        let key: String = match hashmap.iter()
-                            .find(|&(_k, v)| v == &value_total) {
-                            Some((k, &_v)) => k.clone(),
-                            None => String::from("unknown")
-                        };
-                        println!("{} {}", &line[5..line.len()], key);
-                    } else {
-                        println!("{} {}", &line[5..line.len()], unknown);
-                    }
-                }
-            }
-            "clear" => hashmap.clear(),
-            _ => return,
-        }
-    }
-}
-
 struct Quest {
     energy: u32,
     gold: u32,
@@ -514,6 +458,342 @@ fn abc() {
     }
 }
 
+fn addingwords() {
+    let mut hashmap: HashMap<String, i16> = HashMap::with_capacity(32);
+    let stdin = io::stdin();
+
+    for line in stdin.lock().lines().map(|l| l.unwrap()) {
+        let words: Vec<&str> = line.split_whitespace().collect();
+
+        match words[0] {
+            "def" => {
+                hashmap.remove(words[1]);
+                hashmap.insert(words[1].to_string(), words[2].parse().unwrap());
+            }
+            "calc" => {
+                let mut has_unknown: bool = false;
+                let mut value_total: i16 = match hashmap.get(words[1]) {
+                    Some(v) => v.clone(),
+                    None => {
+                        has_unknown = true;
+                        println!("{} unknown", &line[5..line.len()]);
+                        0
+                    }
+                };
+
+                if !has_unknown {
+                    'a: for i in (2..words.len() - 1).step_by(2) {
+                        match hashmap.get(words[i + 1]) {
+                            Some(v) => {
+                                if words[i] == "+" {
+                                    value_total += v;
+                                } else {
+                                    value_total -= v;
+                                }
+                            }
+                            None => {
+                                has_unknown = true;
+                                break 'a;
+                            }
+                        };
+                    }
+                    if !has_unknown {
+                        println!("{} {}", &line[5..line.len()], match hashmap.iter()
+                            .find(|&(_k, v)| v == &value_total) {
+                            Some((k, &_v)) => k.clone(),
+                            None => String::from("unknown"),
+                        });
+                    } else {
+                        println!("{} unknown", &line[5..line.len()]);
+                    }
+                }
+            }
+            "clear" => hashmap.clear(),
+            _ => return,
+        }
+    }
+}
+
+fn election2() {
+    let stdin = io::stdin();
+    let lines: Vec<String> = stdin.lock().lines().map(|line| line.unwrap())
+        .map(|line| line.parse().unwrap()).collect();
+
+    let mut candidates: Vec<String> = Vec::with_capacity(20);
+    let mut parties: Vec<String> = Vec::with_capacity(20);
+    let mut voices: Vec<u16> = Vec::with_capacity(20);
+    {
+        let n: usize = lines[0].parse().unwrap();
+
+        for i in (1..n * 2 + 1).step_by(2) {
+            candidates.push(lines[i].clone());
+            parties.push(lines[i + 1].clone());
+            voices.push(0);
+        }
+        for line in &lines[n * 2 + 2..lines.len()] {
+            for (i, candidate) in candidates.iter().enumerate() {
+                if candidate == line {
+                    voices[i] += 1;
+                    break;
+                }
+            }
+        }
+    }
+    let mut i: usize = 1;
+    let mut winner: usize = 0;
+    let mut is_tie: bool = false;
+    for voice in &voices[1..voices.len()] {
+        let winner_voices = &voices[winner];
+
+        if voice > winner_voices {
+            winner = i;
+            is_tie = false;
+        } else if voice == winner_voices {
+            is_tie = true;
+        }
+        i += 1;
+    }
+    if !is_tie {
+        println!("{}", parties[winner]);
+    } else {
+        println!("tie");
+    }
+}
+
+fn sibice() {
+    let stdin = io::stdin();
+    let lines: Vec<String> = stdin.lock().lines().map(|line| line.unwrap())
+        .map(|line| line.parse().unwrap()).collect();
+    let first_line: Vec<u16> = lines[0].split_whitespace()
+        .map(|word| word.parse().unwrap()).collect();
+    let dimension: f32 = ((first_line[1] * first_line[1] + first_line[2] * first_line[2]) as f32).sqrt();
+    for line in &lines[1..lines.len()] {
+        let n: f32 = line.parse().unwrap();
+
+        if dimension >= n {
+            println!("DA");
+        } else {
+            println!("NE");
+        }
+    }
+}
+
+fn modulo() {
+    let stdin = io::stdin();
+    let mut modulos: Vec<u16> = Vec::with_capacity(10);
+
+    for line in stdin.lock().lines().map(|l| l.unwrap()) {
+        let number: u16 = line.parse().unwrap();
+        modulos.push(number % 42);
+    }
+    modulos.sort();
+    modulos.dedup();
+    println!("{}", modulos.len());
+}
+
+const OUTPUT: [&str; 6] = ["Province", "Duchy", "Estate", "Gold", "Silver", "Copper"];
+
+fn provincesandgold() {
+    let mut input: String = String::new();
+    io::stdin().read_line(&mut input).unwrap();
+    let input: Vec<u8> = input.split_whitespace()
+        .map(|word| word.parse().unwrap()).collect();
+    let total: u8 = input[0] * 3 + input[1] * 2 + input[2];
+    let mut treasure: String = String::with_capacity(6);
+
+    if total > 5 {
+        treasure.push_str(OUTPUT[3]);
+    } else if total > 2 {
+        treasure.push_str(OUTPUT[4]);
+    } else {
+        treasure.push_str(OUTPUT[5]);
+    }
+
+    if total > 1 {
+        let mut victory: String = String::with_capacity(8);
+
+        if total > 7 {
+            victory.push_str(OUTPUT[0]);
+        } else if total > 4 {
+            victory.push_str(OUTPUT[1]);
+        } else {
+            victory.push_str(OUTPUT[2]);
+        }
+        println!("{} or {}", victory, treasure);
+    } else {
+        println!("{}", treasure);
+    }
+}
+
+fn pot() {
+    let stdin = io::stdin();
+    let stdin: Vec<u128> = stdin.lock().lines()
+        .map(|l| l.unwrap().parse::<u128>().unwrap()).collect();
+    let mut result: u128 = 0;
+
+    for line in &stdin[1..stdin.len()] {
+        result += (line / 10).pow((line % 10) as u32);
+    }
+    println!("{}", result);
+}
+
+fn planina() {
+    let mut input: String = String::new();
+    io::stdin().read_line(&mut input).unwrap();
+    let input: u32 = input.trim_end().parse().unwrap();
+    println!("{}", (u64::pow(2, input) + 1).pow(2));
+}
+
+fn everywhere() {
+    let stdin = io::stdin();
+    let stdin: Vec<String> = stdin.lock().lines().map(|line| line.unwrap())
+        .map(|line| line.parse().unwrap()).collect();
+    let mut cities: Vec<&str> = Vec::with_capacity(100);
+    let mut start: usize = 2;
+    let mut end: usize = 1;
+
+    for _i in 0..stdin[0].parse::<usize>().unwrap() {
+        end = stdin[end].parse::<usize>().unwrap() + start;
+        for line in &stdin[start..end] {
+            if !cities.contains(&line.as_str()) {
+                cities.push(line);
+            }
+        }
+        println!("{}", cities.len());
+        cities.clear();
+        start = end + 1;
+    }
+}
+
+fn detaileddifferences() {
+    let stdin = io::stdin();
+    let lines: Vec<String> = stdin.lock().lines().map(|line| line.unwrap())
+        .map(|line| line.parse().unwrap()).collect();
+    let mut result = String::with_capacity(50);
+    let n: usize = lines[0].parse().unwrap();
+
+    for i in (1..n * 2 + 1).step_by(2) {
+        let first = lines[i].as_bytes();
+        let second = lines[i + 1].as_bytes();
+
+        for (i, &byte) in first.iter().enumerate() {
+            if byte == second[i] {
+                result.push('.');
+            } else {
+                result.push('*');
+            }
+        }
+        println!("{}", lines[i]);
+        println!("{}", lines[i + 1]);
+        println!("{}", result);
+        println!();
+        result.clear();
+    }
+}
+
+fn areal() {
+    let mut input: String = String::new();
+    io::stdin().read_line(&mut input).unwrap();
+    let input: f64 = input.trim_end().parse().unwrap();
+
+    println!("{}", input.sqrt() * 4.0);
+}
+
+fn anewalphabet() {
+    let mut input: String = String::new();
+    io::stdin().read_line(&mut input).unwrap();
+    let input: String = input.parse().unwrap();
+    let mut output: String = String::with_capacity(input.len() * 2);
+
+    for c in input.to_ascii_lowercase().chars() {
+        match c {
+            'a' => {
+                output.push('@');
+            }
+            'b' => {
+                output.push('8');
+            }
+            'c' => {
+                output.push('(');
+            }
+            'd' => {
+                output.push_str("|)");
+            }
+            'e' => {
+                output.push('3');
+            }
+            'f' => {
+                output.push('#');
+            }
+            'g' => {
+                output.push('6');
+            }
+            'h' => {
+                output.push_str("[-]");
+            }
+            'i' => {
+                output.push('|');
+            }
+            'j' => {
+                output.push_str("_|");
+            }
+            'k' => {
+                output.push_str("|<");
+            }
+            'l' => {
+                output.push('1');
+            }
+            'm' => {
+                output.push_str("[]\\/[]");
+            }
+            'n' => {
+                output.push_str("[]\\[]");
+            }
+            'o' => {
+                output.push('0');
+            }
+            'p' => {
+                output.push_str("|D");
+            }
+            'q' => {
+                output.push_str("(,)");
+            }
+            'r' => {
+                output.push_str("|Z");
+            }
+            's' => {
+                output.push('$');
+            }
+            't' => {
+                output.push_str("']['");
+            }
+            'u' => {
+                output.push_str("|_|");
+            }
+            'v' => {
+                output.push_str("\\/");
+            }
+            'w' => {
+                output.push_str("\\/\\/");
+            }
+            'x' => {
+                output.push_str("}{");
+            }
+            'y' => {
+                output.push_str("`/");
+            }
+            'z' => {
+                output.push('2');
+            }
+            _ => {
+                output.push(c);
+            }
+        };
+    }
+
+    println!("{}", output);
+}
+
 fn main() {
-    zamka();
+    anewalphabet();
 }
