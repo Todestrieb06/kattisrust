@@ -794,6 +794,68 @@ fn anewalphabet() {
     println!("{}", output);
 }
 
+fn grassseed() {
+    let stdin = io::stdin();
+    let stdin: Vec<String> = stdin.lock().lines().map(|line| line.unwrap())
+        .map(|line| line.parse().unwrap()).collect();
+    let cost: f64 = stdin[0].parse().unwrap();
+    let mut total: f64 = 0.0;
+    for line in &stdin[2..stdin.len()] {
+        let s: Vec<&str> = line.split_whitespace().collect();
+        total += s[0].parse::<f64>().unwrap() * s[1].parse::<f64>().unwrap();
+    }
+    println!("{}", cost * total);
+}
+
+fn pet() {
+    let stdin = io::stdin();
+    let mut c: usize = 0;
+    let mut hg: u8 = 0;
+    for (i, line) in stdin.lock().lines().map(|l| l.unwrap()).enumerate() {
+        let numbers: Vec<u8> = line.split_whitespace().map(|l| l.parse::<u8>().unwrap()).collect();
+        let g = numbers[0] + numbers[1] + numbers[2] + numbers[3];
+        if g > hg {
+            hg = g;
+            c = i;
+        }
+    }
+    println!("{} {}", c + 1, hg);
+}
+
+fn bing() {
+    let stdin = io::stdin();
+    let stdin: Vec<String> = stdin.lock().lines().map(|line| line.unwrap())
+        .collect();
+    let mut i: usize = 1;
+
+    for line in &stdin[1..stdin.len()] {
+        let mut n: usize = 0;
+        for word in &stdin[1..i] {
+            if word.starts_with(line) {
+                n += 1;
+            }
+        }
+        println!("{}", n);
+        i += 1;
+    }
+}
+
+fn romans() {
+    let mut input: String = String::new();
+    io::stdin().read_line(&mut input).unwrap();
+    let input: f32 = input.trim_end().parse().unwrap();
+    println!("{}", (input * (5280. / 4854.) * 1000. + 0.5) as u32);
+}
+
+fn ladder() {
+    let mut input: String = String::new();
+    io::stdin().read_line(&mut input).unwrap();
+    let input: Vec<f32> = input.split_whitespace().map(|n| n.parse::<f32>().unwrap()).collect();
+    let r: f32 = input[1] * (PI / 180.);
+    let r: f32 = input[0] / r.sin();
+    println!("{}", r.ceil());
+}
+
 fn main() {
-    anewalphabet();
+    ladder();
 }
