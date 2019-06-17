@@ -1,1 +1,1 @@
-kattis
+Kattis exercises made in Rust
