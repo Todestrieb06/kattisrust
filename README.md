@@ -1,2 +1,1 @@
-Kattis exercises made in Rust
-Messy, will be re-worked.
+Kattis exercises made in Rust as a learning experience. Messy, will be re-worked.
